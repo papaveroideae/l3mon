@@ -6,6 +6,6 @@ echo "start-debian-bullseye > /dev/null 2>&1 & termux-open-url http://localhost:
 chmod +x $PREFIX/bin/lemon;\
 echo "bash $HOME/setup.txt;exit" >> $PREFIX/share/debian-bullseye/etc/bash.bashrc;\
 curl -LO https://raw.githubusercontent.com/papaveroideae/l3mon/main/setup.txt;\
-mv $HOME/setup.txt $PREFIX/share/debian-bullseye/root/setup.txt;\
+mv $HOME/setup.txt $PREFIX/share/debian-bullseye/root;\
 start-debian-bullseye;\
 echo done
